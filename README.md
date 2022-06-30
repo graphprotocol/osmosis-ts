@@ -2,6 +2,19 @@
 
 This modules contains the TypeScript/AssemblyScript binding for osmosis protobuf
 
+## Usage
+
+```typescript
+import { cosmos, google } from "@graphprotocol/cosmos-ts";
+
+function logDelegator(any: google.protobuf.Any) {
+    if (any.type_url == '/cosmos.staking.v1beta1.MsgDelegate') {
+        const message = cosmos.staking.v1beta1.decodeMsgDelegate(any.value);
+        log.console(message.delegatorAddress)
+    }
+}
+```
+
 ## Development
 
 Install protoc: `https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1` (or more recent)
