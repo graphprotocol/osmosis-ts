@@ -1,25 +1,25 @@
 # osmosis-ts
 
-This modules contains the TypeScript/AssemblyScript binding for osmosis protobuf
+TypeScript/AssemblyScript library for decoding Osmosis messages.
 
 ## Usage
 
 ```typescript
-import { cosmos, google } from "@graphprotocol/cosmos-ts";
+import { osmosis, google } from "@graphprotocol/osmosis-ts";
 
-function logDelegator(any: google.protobuf.Any) {
-    if (any.type_url == '/cosmos.staking.v1beta1.MsgDelegate') {
-        const message = cosmos.staking.v1beta1.decodeMsgDelegate(any.value);
-        log.console(message.delegatorAddress)
-    }
+function logSender(any: google.protobuf.Any) {
+  if (any.type_url == '/osmosis.gamm.v1beta1.MsgSwapExactAmountOut') {
+    const message = osmosis.gamm.v1beta1.decodeMsgSwapExactAmountOut(any.value);
+    log.console(message.sender);
+  }
 }
 ```
 
 ## Development
 
-Install protoc: `https://github.com/protocolbuffers/protobuf/releases/tag/v3.20.1` (or more recent)
+Install [Protocol Buffer Compiler](https://github.com/protocolbuffers/protobuf/releases) (`protoc`) and [Lerna](https://lerna.js.org/).
 
-### Get proto-file
+### Fetch dependencies
 
 ```bash
 git submodule update --init --force
@@ -35,9 +35,10 @@ yarn test
 
 ## Update dependencies
 
-Update branch variable in .gitmodules to point to the new tag.
+In order to update a dependency, change the value of the `branch` option in the corresponding section of the `.gitmodules` file.
 
-> **Submodule should always point to tag**
+> **Note**<br>
+> A submodule should always point to a tag.
 
 ```bash
 git -C <submodule_dir> checkout <new_tag>
